@@ -9,6 +9,17 @@
     <h4>Username: <%= warden.username %></h4>
     <h4>Hostel: <%= warden.hostel %></h4>
   </div>
+  <div style="text-align: center; margin-top: 20px;">
+    <form action="/take-attendance" method="POST">
+      <button type="submit" class="btn btn-primary">Take Attendance</button>
+    </form>
+  </div>
+  <!-- View Attendance Button -->
+  <div style="text-align: center; margin-top: 20px;">
+    <form action="/view-attendance" method="GET">
+      <button type="submit" class="btn btn-secondary">View Attendance</button>
+    </form>
+  </div>
 </div>
 
 <% include ./partial/footer %>

@@ -15,7 +15,7 @@ var express = require("express"),
   Leave = require("./models/leave");
 
 var moment = require("moment");
-
+const { exec } = require('child_process');
 var url =process.env.DATABASEURL|| "mongodb://localhost/LeaveApp";
 mongoose
   .connect(url, {
@@ -94,6 +94,37 @@ app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
+app.post('/take-attendance', (req, res) => {
+  exec('python main.py', (err, stdout, stderr) => {
+    if (err) {
+      console.error('Error executing Python script:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+    if (stderr) {
+      console.error('Python script error:', stderr);
+      return res.status(500).send('Internal Server Error');
+    }
+    console.log('Python script output:', stdout);
+    res.send('Attendance taken successfully');
+  });
+});
+
+const router = express.Router();
+const path = require('path');
+const xlsx = require('xlsx');
+
+router.get('/view-attendance', (req, res) => {
+    const workbook = xlsx.readFile(path.join(__dirname, 'Attendance/AttendanceStudent.xlsx'));
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const attendanceData = xlsx.utils.sheet_to_json(worksheet);
+    
+    const studentUsername = req.user.username;
+    const studentAttendance = attendanceData.filter(record => record.Username === studentUsername);
+    
+    res.render('viewAttendance', { attendance: studentAttendance });
+});
+
+module.exports = router;
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {

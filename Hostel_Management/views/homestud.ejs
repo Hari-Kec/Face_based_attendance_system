@@ -1,5 +1,5 @@
 <% include ./partial/header %>
-<% include ./partial/studfunction %> 
+<% include ./partial/studfunction %>
 
 <div class="col-sm-6" style="flex: 0 0 50%; max-width: 60%; margin-left: 431px; margin-top: -181px; text-align: center;">
   <div class="thumbnail">
@@ -37,5 +37,19 @@
     </tbody>
   </table>
 </div>
+
+<!-- Take Attendance Button -->
+<div style="text-align: center; margin-top: 20px;">
+  <form action="/take-attendance" method="POST">
+    <button type="submit" class="btn btn-primary">Take Attendance</button>
+  </form>
+</div>
+<!-- View Attendance Button -->
+<div style="text-align: center; margin-top: 20px;">
+  <form action="/view-attendance" method="GET">
+    <button type="submit" class="btn btn-secondary">View Attendance</button>
+  </form>
+</div>
+
 
 <% include ./partial/footer %>
