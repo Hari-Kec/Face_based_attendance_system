@@ -3,10 +3,10 @@ import re
 
 def is_connected_to_wifi(target_ssid, min_signal_strength=-60):
     try:
-        # Run command to show connected Wi-Fi details (for Windows; modify for macOS/Linux).
+        
         result = subprocess.check_output(["netsh", "WLAN", "show", "interfaces"], shell=True).decode('utf-8')
         
-        # Check if the target SSID is in the command output.
+        
         if target_ssid in result:
             print(f"Connected to {target_ssid}")
             
